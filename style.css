@@ -1,7 +1,3 @@
-:root {
-    --light-color: #ffffff44; /* #88999C */
-}
-
 body {
     background-image: linear-gradient(
         225deg,
@@ -80,17 +76,21 @@ button {
 }
 
 #progress-bar {
-    background-color: var(--light-color);
+    background-color: #ffffff44;
     height: 3px;
     width: 100%;
     border-radius: 15px;
-    margin-top: 1em;
-    margin-bottom: .5em;
+    margin: 1em 0em 1em 0em;
 }
 
 #current-progress {
+    --progress: 0%;
     background-color: white;
     height: inherit;
-    width: 32%;
+    width: var(--progress);
     border-radius: inherit;
+}
+
+#progress-container {
+    padding-bottom: 1em;
 }

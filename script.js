@@ -5,6 +5,8 @@ const cover = document.getElementById("cover");
 const play = document.getElementById("play");
 const previous = document.getElementById("previous");
 const next = document.getElementById("next");
+const currentProgress = document.getElementById("current-progress");
+const progressContainer = document.getElementById("progress-container");
 
 const cyberScript = {
     songName: "CyberScript",
@@ -58,14 +60,14 @@ function playPause() {
     }
 }
 
-initializeSong = () => {
+function initializeSong() {
     cover.src = `images/${playlist[index].file}.webp`;
     song.src = `songs/${playlist[index].file}.mp3`;
     songName.innerText = playlist[index].songName;
     bandName.innerText = playlist[index].bandName;
 }
 
-previousSong = () => {
+function previousSong() {
     if (index == 0) {
         index = playlist.length -1 ;
     }
@@ -76,8 +78,7 @@ previousSong = () => {
     playSong();
 }
 
-
-nextSong = () => {
+function nextSong() {
     if (index === playlist.length - 1) {
         index = 0;
     }
@@ -88,11 +89,25 @@ nextSong = () => {
     playSong();
 }
 
+function updateProgressBar() {
+    const barWidth = (song.currentTime / song.duration) * 100;
+    currentProgress.style.setProperty("--progress", `${barWidth}%`);
+}
+
+function jumpTo(event) {
+    const width = progressContainer.clientWidth;
+    const clickPosition = event.offsetX;
+    const jumpToTime = (clickPosition/width) * song.duration;
+    song.currentTime = jumpToTime;
+}
+
 initializeSong();
 
 play.addEventListener("click", playPause);
+// play.addEventListener("dblclick", nextSong);
 previous.addEventListener("click", previousSong);
 next.addEventListener("click", nextSong);
-
+song.addEventListener("timeupdate", updateProgressBar);
+progressContainer.addEventListener("click", jumpTo);
 
 
