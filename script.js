@@ -12,7 +12,6 @@ const repeatButton = document.getElementById("repeat");
 const songTime = document.getElementById("song-time");
 const totalTime = document.getElementById("total-time");
 const likeButton = document.getElementById("like");
-
 const playlistName = document.getElementById("playlist-title");
 playlistName.innerHTML = "Playlist 03"
 
@@ -68,8 +67,7 @@ function pauseSong() {
 function playPause() {
     if (isPlaying) {
         pauseSong();
-    }
-    else {
+    } else {
         playSong();
     }
 }
@@ -86,8 +84,7 @@ function initializeSong() {
 function previousSong() {
     if (index == 0) {
         index = sortedPlaylist.length -1 ;
-    }
-    else {
+    } else {
         index = index - 1;
     }
     initializeSong();
@@ -97,8 +94,7 @@ function previousSong() {
 function nextSong() {
     if (index === sortedPlaylist.length - 1) {
         index = 0;
-    }
-    else {
+    } else {
         index += 1;
     }
     initializeSong();
@@ -138,8 +134,7 @@ function shuffleButtonClicked() {
         isShuffled = true;
         shuffleArray(sortedPlaylist);
         shuffleButton.classList.add("button-active");
-    }
-    else {
+    } else {
         isShuffled = false;
         sortedPlaylist = [...originalPlaylist];
         shuffleButton.classList.remove("button-active");
@@ -149,8 +144,7 @@ function shuffleButtonClicked() {
 function nextOrRepeat() {
     if (repeatOn === false) {
         nextSong();
-    }
-    else {
+    } else {
         playSong();
     }
 }
@@ -158,12 +152,9 @@ function nextOrRepeat() {
 function repeatButtonClicked() {
     if (repeatOn === false) {
         repeatOn = true;
-
         repeatButton.classList.add("button-active");
-    }
-    else {
+    } else {
         repeatOn = false;
-        
         repeatButton.classList.remove("button-active");
     }
 }
@@ -175,8 +166,7 @@ function toHHMMSS(originalNumber) {
 
     if (hours > 0) {
         return `${hours.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-    }
-    else {
+    } else {
         return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
     }
 }
@@ -200,8 +190,7 @@ function unlikeMusic() {
 function checkIsLiked() {
     if (sortedPlaylist[index].isLiked === true) {
         likeMusic();
-    }
-    else {
+    } else {
         sortedPlaylist[index].isLiked = false;
         unlikeMusic();
     }
@@ -211,8 +200,7 @@ function likeButtonClicked() {
     if (sortedPlaylist[index].isLiked === false) {
         likeMusic();
         sortedPlaylist[index].isLiked = true;
-    }
-    else {
+    } else {
         unlikeMusic();
         sortedPlaylist[index].isLiked = false;
     }
@@ -232,5 +220,3 @@ progressContainer.addEventListener("click", jumpTo);
 shuffleButton.addEventListener("click", shuffleButtonClicked);
 repeatButton.addEventListener("click", repeatButtonClicked);
 likeButton.addEventListener("click", likeButtonClicked);
-
-
