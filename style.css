@@ -49,8 +49,14 @@ button {
 }
 
 #cover {
-    width: 450px;
-    margin: 0em 0em 2em 0em;
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    margin: 0 0 2em 0;
+}
+
+.music-container {
+    max-width: 600px; /* mas não passa disso em telas grandes */
 }
 
 #playlist-title {
