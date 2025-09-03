@@ -8,6 +8,7 @@ const next = document.getElementById("next");
 const currentProgress = document.getElementById("current-progress");
 const progressContainer = document.getElementById("progress-container");
 const shuffleButton = document.getElementById("shuffle");
+const repeatButton = document.getElementById("repeat");
 
 const cyberScript = {
     songName: "CyberScript",
@@ -39,6 +40,7 @@ let index = 0;
 let isPlaying = false;
 let isLiked = false;
 let isShuffled = false;
+let repeatOn = false;
 
 function playSong() {
     play.querySelector(".bi").classList.remove("bi-play-circle-fill");
@@ -119,7 +121,7 @@ function shuffleArray(preShuffleArray) {
     }
 }
 
-function shufflePlaylist() {
+function shuffleButtonClicked() {
     if (isShuffled === false) {
         isShuffled = true;
         shuffleArray(sortedPlaylist);
@@ -132,6 +134,28 @@ function shufflePlaylist() {
     }
 }
 
+function nextOrRepeat() {
+    if (repeatOn === false) {
+        nextSong();
+    }
+    else {
+        playSong();
+    }
+}
+
+function repeatButtonClicked() {
+    if (repeatOn === false) {
+        repeatOn = true;
+
+        repeatButton.classList.add("button-active");
+    }
+    else {
+        repeatOn = false;
+        
+        repeatButton.classList.remove("button-active");
+    }
+}
+
 initializeSong();
 
 play.addEventListener("click", playPause);
@@ -139,7 +163,9 @@ play.addEventListener("click", playPause);
 previous.addEventListener("click", previousSong);
 next.addEventListener("click", nextSong);
 song.addEventListener("timeupdate", updateProgressBar);
+song.addEventListener("ended", nextOrRepeat);
 progressContainer.addEventListener("click", jumpTo);
-shuffleButton.addEventListener("click", shufflePlaylist);
+shuffleButton.addEventListener("click", shuffleButtonClicked);
+repeatButton.addEventListener("click", repeatButtonClicked);
 
 
