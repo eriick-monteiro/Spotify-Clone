@@ -9,6 +9,8 @@ const currentProgress = document.getElementById("current-progress");
 const progressContainer = document.getElementById("progress-container");
 const shuffleButton = document.getElementById("shuffle");
 const repeatButton = document.getElementById("repeat");
+const songTime = document.getElementById("song-time");
+const totalTime = document.getElementById("total-time");
 
 const cyberScript = {
     songName: "CyberScript",
@@ -70,6 +72,7 @@ function initializeSong() {
     song.src = `songs/${sortedPlaylist[index].file}.mp3`;
     songName.innerText = sortedPlaylist[index].songName;
     bandName.innerText = sortedPlaylist[index].bandName;
+    updateTotalTime();
 }
 
 function previousSong() {
@@ -97,6 +100,7 @@ function nextSong() {
 function updateProgressBar() {
     const barWidth = (song.currentTime / song.duration) * 100;
     currentProgress.style.setProperty("--progress", `${barWidth}%`);
+    songTime.innerHTML = toHHMMSS(song.currentTime);
 }
 
 function jumpTo(event) {
@@ -156,6 +160,23 @@ function repeatButtonClicked() {
     }
 }
 
+function toHHMMSS(originalNumber) {
+    let hours = Math.floor(originalNumber / 3600);
+    let min = Math.floor((originalNumber - hours * 3600) / 60);
+    let sec = Math.floor(originalNumber - hours * 3600 - min * 60);
+
+    if (hours > 0) {
+        return `${hours.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    }
+    else {
+        return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    }
+}
+
+function updateTotalTime() {
+    totalTime.innerHTML = toHHMMSS(song.duration);
+}
+
 initializeSong();
 
 play.addEventListener("click", playPause);
@@ -164,6 +185,7 @@ previous.addEventListener("click", previousSong);
 next.addEventListener("click", nextSong);
 song.addEventListener("timeupdate", updateProgressBar);
 song.addEventListener("ended", nextOrRepeat);
+song.addEventListener("loadedmetadata", updateTotalTime);
 progressContainer.addEventListener("click", jumpTo);
 shuffleButton.addEventListener("click", shuffleButtonClicked);
 repeatButton.addEventListener("click", repeatButtonClicked);
