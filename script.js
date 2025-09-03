@@ -4,8 +4,8 @@ const song = document.getElementById("audio");
 const play = document.getElementById("play");
 const capa = document.getElementById("cover");
 
-musics = ["CyberScript", "CyberStyleSheet", "h3ll0w0rld", "ReactThis"];
-music = musics[3];
+musics = ["CyberScript", "CyberStyleSheet", "h3ll0-w0rld", "ReactThis"];
+music = musics[2];
 
 songName.innerText = music;
 bandName.innerText = "N!gh7 ₿ØyZ";
