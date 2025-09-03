@@ -11,36 +11,43 @@ const shuffleButton = document.getElementById("shuffle");
 const repeatButton = document.getElementById("repeat");
 const songTime = document.getElementById("song-time");
 const totalTime = document.getElementById("total-time");
+const likeButton = document.getElementById("like");
+
+const playlistName = document.getElementById("playlist-title");
+playlistName.innerHTML = "Playlist 03"
 
 const cyberScript = {
     songName: "CyberScript",
     bandName: "N!gh7 ₿ØyZ",
-    file: "CyberScript"
+    file: "CyberScript",
+    isLiked: false
 }
 
 const cyberStyleSheet = {
     songName: "CyberStyleSheet",
     bandName: "N!gh7 ₿ØyZ",
-    file: "CyberStyleSheet"
+    file: "CyberStyleSheet",
+    isLiked: false
 }
 
 const helloWorld = {
     songName: "h3ll0-w0rld",
     bandName: "N!gh7 ₿ØyZ",
-    file: "h3ll0-w0rld"
+    file: "h3ll0-w0rld",
+    isLiked: false
 }
 
 const reactThis = {
     songName: "ReactThis",
     bandName: "N!gh7 ₿ØyZ",
-    file: "ReactThis"
+    file: "ReactThis",
+    isLiked: false
 }
 
-const originalPlaylist = [cyberScript, cyberStyleSheet, helloWorld, reactThis];
+const originalPlaylist = JSON.parse(localStorage.getItem('playlist')) ?? [cyberScript, cyberStyleSheet, helloWorld, reactThis];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
 let isPlaying = false;
-let isLiked = false;
 let isShuffled = false;
 let repeatOn = false;
 
@@ -73,6 +80,7 @@ function initializeSong() {
     songName.innerText = sortedPlaylist[index].songName;
     bandName.innerText = sortedPlaylist[index].bandName;
     updateTotalTime();
+    checkIsLiked();
 }
 
 function previousSong() {
@@ -177,6 +185,40 @@ function updateTotalTime() {
     totalTime.innerHTML = toHHMMSS(song.duration);
 }
 
+function likeMusic() {
+    likeButton.querySelector(".bi").classList.remove("bi-heart");
+    likeButton.querySelector(".bi").classList.add("bi-heart-fill");
+    likeButton.classList.add("button-active");
+}
+
+function unlikeMusic() {
+    likeButton.querySelector(".bi").classList.remove("bi-heart-fill");
+    likeButton.querySelector(".bi").classList.add("bi-heart");
+    likeButton.classList.remove("button-active");
+}
+
+function checkIsLiked() {
+    if (sortedPlaylist[index].isLiked === true) {
+        likeMusic();
+    }
+    else {
+        sortedPlaylist[index].isLiked = false;
+        unlikeMusic();
+    }
+}
+
+function likeButtonClicked() {
+    if (sortedPlaylist[index].isLiked === false) {
+        likeMusic();
+        sortedPlaylist[index].isLiked = true;
+    }
+    else {
+        unlikeMusic();
+        sortedPlaylist[index].isLiked = false;
+    }
+    localStorage.setItem('playlist', JSON.stringify(originalPlaylist));
+}
+
 initializeSong();
 
 play.addEventListener("click", playPause);
@@ -189,5 +231,6 @@ song.addEventListener("loadedmetadata", updateTotalTime);
 progressContainer.addEventListener("click", jumpTo);
 shuffleButton.addEventListener("click", shuffleButtonClicked);
 repeatButton.addEventListener("click", repeatButtonClicked);
+likeButton.addEventListener("click", likeButtonClicked);
 
 

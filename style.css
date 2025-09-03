@@ -20,6 +20,10 @@ button {
     border: none;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #infos-musica {
     display: flex;
     flex-direction: row;
@@ -48,20 +52,21 @@ button {
 
 #cover {
     width: 100%;
-    max-width: 450px;
+    max-width: 300px;
     height: auto;
     margin: 0 0 2em 0;
+    border-radius: 10px;
 }
 
 .music-container {
-    max-width: 600px; /* mas não passa disso em telas grandes */
+    max-width: 600px;
 }
 
 #playlist-title {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: .6em 0em 3em 0em;
+    margin: .8em 0em 3em 0em;
 }
 
 #song-name {
@@ -75,6 +80,10 @@ button {
 
 .light-color {
     color: #88999C;
+}
+
+#progress-container {
+    margin-top: 20px;
 }
 
 #progress-bar {
